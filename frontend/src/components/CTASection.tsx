@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function CTASection() {
   return (
@@ -11,9 +12,9 @@ export default function CTASection() {
         <p className="text-[15px] sm:text-[17px] text-white/90 mb-8 lg:mb-10 max-w-2xl mx-auto leading-relaxed">
           Join thousands of customers already using Farmersmarketsocal to buy, sell and manage markets across southern California
         </p>
-        <button className="bg-[#0f172a] hover:bg-black text-white px-6 py-3 lg:px-7 rounded-lg text-[14px] lg:text-[15px] font-medium flex items-center gap-2 transition-colors mx-auto w-full sm:w-auto justify-center">
-          Contact Us <ArrowRight className="w-4 h-4 ml-1" />
-        </button>
+        <Link to="/register" className="bg-[#0f172a] hover:bg-black text-white px-6 py-3 lg:px-7 rounded-lg text-[14px] lg:text-[15px] font-medium inline-flex items-center gap-2 transition-colors mx-auto w-full sm:w-auto justify-center">
+          Get Started <ArrowRight className="w-4 h-4 ml-1" />
+        </Link>
       </div>
     </section>
   );

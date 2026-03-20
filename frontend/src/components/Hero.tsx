@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
@@ -19,9 +20,9 @@ export default function Hero() {
               members of the community
             </p>
             
-            <button className="bg-[#0f172a] hover:bg-black text-white px-6 py-3 rounded-lg text-[15px] font-medium flex items-center justify-center lg:justify-start gap-2 transition-colors mb-10 w-full sm:w-auto mx-auto lg:mx-0">
-              Contact Us <ArrowRight className="w-4 h-4 ml-1" />
-            </button>
+            <Link to="/register" className="bg-[#0f172a] hover:bg-black text-white px-6 py-3 rounded-lg text-[15px] font-medium inline-flex items-center justify-center lg:justify-start gap-2 transition-colors mb-10 w-full sm:w-auto mx-auto lg:mx-0">
+              Get Started <ArrowRight className="w-4 h-4 ml-1" />
+            </Link>
 
             <ul className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-8 text-left">
               {[
@@ -53,11 +54,13 @@ export default function Hero() {
               <p className="text-[11px] sm:text-xs font-medium text-textMuted leading-snug mb-2 sm:mb-3">
                 Community<br/>Members
               </p>
-              {/* Small generic avatars */}
+              {/* Added profile avatars per user request */}
               <div className="flex -space-x-2">
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-emerald-100 border-[1.5px] border-white"></div>
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-blue-100 border-[1.5px] border-white"></div>
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-100 border-[1.5px] border-white"></div>
+                <img src="https://i.pravatar.cc/100?img=32" alt="Community member" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border-[1.5px] border-white" />
+                <img src="https://i.pravatar.cc/100?img=44" alt="Community member" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border-[1.5px] border-white" />
+                <img src="https://i.pravatar.cc/100?img=68" alt="Community member" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border-[1.5px] border-white" />
+                <img src="https://i.pravatar.cc/100?img=12" alt="Community member" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border-[1.5px] border-white" />
+                <img src="https://i.pravatar.cc/100?img=21" alt="Community member" className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border-[1.5px] border-white" />
               </div>
             </div>
           </div>
