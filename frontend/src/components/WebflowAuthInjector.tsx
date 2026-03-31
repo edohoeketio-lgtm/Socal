@@ -11,47 +11,51 @@ export default function WebflowAuthInjector() {
     let portalTarget: HTMLElement | null = null;
     
     const findAndInject = () => {
-      // Unbeatable generic selector: find the literal "Login" link instead of gambling on Webflow's class names
-      const loginBtn = document.querySelector('a[href*="/login"]') as HTMLElement;
-      if (!loginBtn) return false; // Return false if not found yet
+      const loginBtns = Array.from(document.querySelectorAll('a[href*="/login"]'));
+      if (loginBtns.length === 0) return false;
 
-      const container = loginBtn.parentElement;
-      if (!container) return false;
+      let injected = false;
 
-      if (isLoggedIn) {
-        // Brutally hide ALL login/signup related links located in that exact container
-        const originalButtons = container.querySelectorAll('a[href*="/login"], a[href*="/registration"], a[href*="/signup"]');
-        originalButtons.forEach(btn => {
-          (btn as HTMLElement).style.display = 'none';
-          (btn as HTMLElement).style.visibility = 'hidden';
-        });
+      loginBtns.forEach((btn, index) => {
+        const container = btn.parentElement;
+        if (!container) return;
 
-        // Create and jam our Dropdown container right into that nav slot
-        portalTarget = document.getElementById('react-auth-portal');
-        if (!portalTarget) {
-          portalTarget = document.createElement('div');
-          portalTarget.id = 'react-auth-portal';
-          portalTarget.style.display = 'flex';
-          portalTarget.style.alignItems = 'center';
-          portalTarget.style.marginLeft = '1rem';
-          // Force layout into Webflow's native flex behavior
-          portalTarget.style.position = 'relative';
-          container.appendChild(portalTarget);
+        if (isLoggedIn) {
+          // Hide ALL login/signup links in every discovered container (mobile & desktop)
+          const allButtons = container.querySelectorAll('a[href*="/login"], a[href*="/registration"], a[href*="/signup"]');
+          allButtons.forEach(b => {
+            (b as HTMLElement).style.display = 'none';
+          });
+
+          // Only mount the React portal to the desktop container (usually has "button" in its class name)
+          // Or if there's only 1 container, just use it.
+          if (container.className.includes('button') || loginBtns.length === 1 || index === loginBtns.length - 1) {
+            portalTarget = document.getElementById('react-auth-portal');
+            if (!portalTarget) {
+              portalTarget = document.createElement('div');
+              portalTarget.id = 'react-auth-portal';
+              portalTarget.style.display = 'flex';
+              portalTarget.style.alignItems = 'center';
+              portalTarget.style.marginLeft = '1rem';
+              portalTarget.style.position = 'relative';
+              container.appendChild(portalTarget);
+            }
+            setTargetNode(portalTarget);
+            injected = true;
+          }
+        } else {
+          // Restore ALL buttons
+          const allButtons = container.querySelectorAll('a[href*="/login"], a[href*="/registration"], a[href*="/signup"]');
+          allButtons.forEach(b => {
+            (b as HTMLElement).style.display = '';
+          });
+          const pt = document.getElementById('react-auth-portal');
+          if (pt) pt.remove();
+          setTargetNode(null);
+          injected = true;
         }
-        setTargetNode(portalTarget);
-      } else {
-        // If logged out, make sure the login buttons are fully enabled
-        const originalButtons = container.querySelectorAll('a[href*="/login"], a[href*="/registration"], a[href*="/signup"]');
-        originalButtons.forEach(btn => {
-          (btn as HTMLElement).style.display = '';
-          (btn as HTMLElement).style.visibility = '';
-        });
-        
-        const pt = document.getElementById('react-auth-portal');
-        if (pt) pt.remove();
-        setTargetNode(null);
-      }
-      return true; // Return true if successful
+      });
+      return injected;
     };
 
     // React is sometimes shockingly fast. We actively poll for the DOM to settle up to 20 times.
