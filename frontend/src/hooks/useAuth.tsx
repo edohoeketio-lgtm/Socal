@@ -41,8 +41,13 @@ export function useAuth() {
         }
       }
 
-      // 3. Check for specific cookies if exposed
-      if (document.cookie.includes('tangram') || document.cookie.includes('session=')) {
+      // 3. Check for specific cookies discovered via Tangram
+      if (
+        document.cookie.includes('tangram') || 
+        document.cookie.includes('session=') || 
+        document.cookie.includes('user.id=') ||
+        document.cookie.includes('logged_in=true')
+      ) {
         setIsLoggedIn(true);
         return;
       }
