@@ -39,7 +39,7 @@ export default function Hero() {
           <div className="relative mt-8 lg:mt-0 px-2 sm:px-0">
             <div className="relative rounded-xl overflow-hidden shadow-xl">
               <img 
-                src="/Assets/Hero Image.png" 
+                src="https://socal-theta-psi.vercel.app/Assets/Hero Image.png" 
                 alt="People at farmers market" 
                 className="w-full object-cover"
               />
