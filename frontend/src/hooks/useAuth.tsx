@@ -66,12 +66,40 @@ export function useAuth() {
       setIsLoggedIn(false);
     };
 
-    // Run immediately on mount
     checkAuthStatus();
+
+    // Since Tangram might take a solid second or two to fetch the session from its backend 
+    // and populate `window.current_user`, we must poll for it instead of only checking once!
+    const interval = setInterval(() => {
+      const hasGlobalAuth = 
+        typeof window !== 'undefined' && (
+          // @ts-ignore
+          window.current_user || 
+          // @ts-ignore
+          window.current_user_data ||
+          // @ts-ignore
+          window.Tangram?.currentUser || 
+          // @ts-ignore
+          window.tangram?.user ||
+          // @ts-ignore
+          window.$memberstackDom?.getCurrentMember
+        );
+
+      if (hasGlobalAuth) {
+        setIsLoggedIn(true);
+        clearInterval(interval);
+      }
+    }, 500);
+
+    // Stop polling after 10 seconds to save memory
+    setTimeout(() => clearInterval(interval), 10000);
+
+    window.addEventListener('storage', checkAuthStatus);
     
-    // Optional: create a small interval to catch delayed injects by CDN scripts
-    const interval = setTimeout(checkAuthStatus, 500);
-    return () => clearTimeout(interval);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('storage', checkAuthStatus);
+    };
   }, []);
 
   return { isLoggedIn };
