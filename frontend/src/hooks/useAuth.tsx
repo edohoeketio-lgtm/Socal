@@ -7,8 +7,11 @@ export function useAuth() {
     const checkAuthStatus = () => {
       // 1. Check for a common global Tangram/Memberstack authentication object
       const hasGlobalAuth = 
-        // @ts-ignore
         typeof window !== 'undefined' && (
+          // @ts-ignore
+          window.current_user || 
+          // @ts-ignore
+          window.current_user_data ||
           // @ts-ignore
           window.Tangram?.currentUser || 
           // @ts-ignore
