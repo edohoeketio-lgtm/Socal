@@ -33,6 +33,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<SignIn />} />
           <Route path="/register" element={<SignUp />} />
+          <Route path="*" element={<LandingPage />} />
         </Routes>
       </div>
     </BrowserRouter>
