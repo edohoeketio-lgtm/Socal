@@ -8,65 +8,63 @@ export default function WebflowAuthInjector() {
   const [targetNode, setTargetNode] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    // Run an interval to look for the Webflow nav container since it might load asynchronously
-    let container: HTMLElement | null = null;
+    let portalTarget: HTMLElement | null = null;
     
     const findAndInject = () => {
-      container = document.querySelector('.navbar_menu-buttons');
-      if (!container) return;
+      // Unbeatable generic selector: find the literal "Login" link instead of gambling on Webflow's class names
+      const loginBtn = document.querySelector('a[href*="/login"]') as HTMLElement;
+      if (!loginBtn) return false; // Return false if not found yet
+
+      const container = loginBtn.parentElement;
+      if (!container) return false;
 
       if (isLoggedIn) {
-        // Hide existing Webflow fallback buttons (Login / Sign Up) if they exist
-        const originalButtons = container.querySelectorAll('a');
+        // Brutally hide ALL login/signup related links located in that exact container
+        const originalButtons = container.querySelectorAll('a[href*="/login"], a[href*="/registration"], a[href*="/signup"]');
         originalButtons.forEach(btn => {
           (btn as HTMLElement).style.display = 'none';
+          (btn as HTMLElement).style.visibility = 'hidden';
         });
 
-        // Create our target container if it doesn't already exist
-        let portalTarget = document.getElementById('react-auth-portal');
+        // Create and jam our Dropdown container right into that nav slot
+        portalTarget = document.getElementById('react-auth-portal');
         if (!portalTarget) {
           portalTarget = document.createElement('div');
           portalTarget.id = 'react-auth-portal';
-          // Match standard top-nav alignment logic
           portalTarget.style.display = 'flex';
           portalTarget.style.alignItems = 'center';
           portalTarget.style.marginLeft = '1rem';
+          // Force layout into Webflow's native flex behavior
+          portalTarget.style.position = 'relative';
           container.appendChild(portalTarget);
         }
         setTargetNode(portalTarget);
       } else {
-        // Restore existing buttons if logged out
-        const originalButtons = container?.querySelectorAll('a');
-        originalButtons?.forEach(btn => {
+        // If logged out, make sure the login buttons are fully enabled
+        const originalButtons = container.querySelectorAll('a[href*="/login"], a[href*="/registration"], a[href*="/signup"]');
+        originalButtons.forEach(btn => {
           (btn as HTMLElement).style.display = '';
+          (btn as HTMLElement).style.visibility = '';
         });
         
-        const portalTarget = document.getElementById('react-auth-portal');
-        if (portalTarget) {
-          portalTarget.remove();
-        }
+        const pt = document.getElementById('react-auth-portal');
+        if (pt) pt.remove();
         setTargetNode(null);
       }
+      return true; // Return true if successful
     };
 
-    // Attempt immediately and once per 500ms for up to 5 seconds to catch delayed DOM loads
-    findAndInject();
+    // React is sometimes shockingly fast. We actively poll for the DOM to settle up to 20 times.
     let attempts = 0;
     const interval = setInterval(() => {
       attempts++;
-      if (!container) findAndInject();
-      if (container || attempts > 10) clearInterval(interval);
-    }, 500);
+      const success = findAndInject();
+      if (success || attempts > 20) clearInterval(interval);
+    }, 250);
 
     return () => {
       clearInterval(interval);
-      if (container) {
-        const originalButtons = container.querySelectorAll('a');
-        originalButtons.forEach(btn => {
-          (btn as HTMLElement).style.display = '';
-        });
-      }
-      const portalTarget = document.getElementById('react-auth-portal');
+      // Clean up sequence...
       if (portalTarget) portalTarget.remove();
     };
   }, [isLoggedIn]);
