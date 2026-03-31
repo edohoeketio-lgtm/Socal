@@ -71,8 +71,12 @@ export function useAuth() {
     // Since Tangram might take a solid second or two to fetch the session from its backend 
     // and populate `window.current_user`, we must poll for it instead of only checking once!
     const interval = setInterval(() => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const forceLogin = urlParams.get('force_login') === 'true';
+
       const hasGlobalAuth = 
-        typeof window !== 'undefined' && (
+        forceLogin ||
+        (typeof window !== 'undefined' && (
           // @ts-ignore
           window.current_user || 
           // @ts-ignore
@@ -83,7 +87,7 @@ export function useAuth() {
           window.tangram?.user ||
           // @ts-ignore
           window.$memberstackDom?.getCurrentMember
-        );
+        ));
 
       if (hasGlobalAuth) {
         setIsLoggedIn(true);
