@@ -12,7 +12,6 @@ import SignUp from './pages/SignUp';
 function LandingPage() {
   return (
     <>
-      <Header />
       <main>
         <Hero />
         <FeatureSection {...shoppersData} />
