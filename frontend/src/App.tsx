@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import WebflowAuthInjector from './components/WebflowAuthInjector';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FeatureSection from './components/FeatureSection';
@@ -28,7 +27,6 @@ function LandingPage() {
 function App() {
   return (
     <BrowserRouter>
-      <WebflowAuthInjector />
       <div className="min-h-screen">
         <Routes>
           <Route path="/" element={<LandingPage />} />
