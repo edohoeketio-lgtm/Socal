@@ -10,11 +10,14 @@ export default function WebflowAuthInjector() {
   useEffect(() => {
     let portalTarget: HTMLElement | null = null;
     
+    console.log('--- REACT AUTH INJECTOR MOUNTED ---', { isLoggedIn });
+
     const findAndInject = () => {
       const loginBtns = Array.from(document.querySelectorAll('a[href*="/login"]'));
       if (loginBtns.length === 0) return false;
 
       let injected = false;
+      console.log('--- FOUND LOGIN BUTTONS ---', loginBtns.length);
 
       loginBtns.forEach((btn, index) => {
         const container = btn.parentElement;
