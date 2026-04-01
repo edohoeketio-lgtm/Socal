@@ -21,44 +21,52 @@ export default function UserDropdown() {
     <div className="relative" ref={dropdownRef}>
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
+        className="flex items-center gap-1.5 text-[#004e44] hover:text-[#003830] transition-colors font-medium text-[15px] px-1"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-          <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
+        Shopper Account
+        <svg 
+          className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
-          <div className="px-4 py-2 border-b border-gray-50 mb-1">
-            <p className="text-sm font-medium text-gray-900">My Account</p>
-          </div>
-          <a
-            href="https://app.farmersmarketsocal.com/dashboard"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors"
+        <div className="absolute right-0 top-[120%] w-[200px] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-[#e5e7eb] py-2 flex flex-col items-start z-[99999]" style={{ minWidth: '180px' }}>
+          <a 
+            href="https://app.farmersmarketsocal.com/transactions" 
+            className="w-full text-left px-5 py-3 text-[15px] text-[#004e44] hover:bg-gray-50 transition-colors"
           >
-            Dashboard
+            Transactions
           </a>
-          <a
-            href="https://app.farmersmarketsocal.com/settings"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors"
+          <a 
+            href="https://app.farmersmarketsocal.com/messages" 
+            className="w-full text-left px-5 py-3 text-[15px] text-[#004e44] hover:bg-gray-50 transition-colors"
           >
-            Settings
+            Messages
           </a>
-          <div className="border-t border-gray-50 mt-1 pt-1">
-            <button
-              onClick={() => {
-                // To log out seamlessly: Clear standard Tangram keys and reload
-                localStorage.removeItem('tangram_token');
-                localStorage.removeItem('tangram_user');
-                localStorage.removeItem('token');
-                window.location.href = '/login';
-              }}
-              className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
-            >
-              Sign out
-            </button>
-          </div>
+          <a 
+            href="https://app.farmersmarketsocal.com/settings" 
+            className="w-full text-left px-5 py-3 text-[15px] text-[#004e44] hover:bg-gray-50 transition-colors"
+          >
+            Profile
+          </a>
+          <button 
+            onClick={() => {
+              sessionStorage.clear();
+              localStorage.clear();
+              document.cookie.split(";").forEach((c) => {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+              });
+              window.location.href = 'https://app.farmersmarketsocal.com/logout';
+            }} 
+            className="w-full text-left px-5 py-3 text-[15px] text-[#004e44] hover:bg-gray-50 transition-colors"
+          >
+            Logout
+          </button>
         </div>
       )}
     </div>
