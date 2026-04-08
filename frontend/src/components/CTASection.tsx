@@ -12,9 +12,14 @@ export default function CTASection() {
         <p className="text-[15px] sm:text-[17px] text-white/90 mb-8 lg:mb-10 max-w-2xl mx-auto leading-relaxed">
           Join thousands of customers already using Farmersmarketsocal to buy, sell and manage markets across southern California
         </p>
-        <Link to="/register" className="bg-[#0f172a] hover:bg-black text-white px-6 py-3 lg:px-7 rounded-lg text-[14px] lg:text-[15px] font-medium inline-flex items-center gap-2 transition-colors mx-auto w-full sm:w-auto justify-center">
-          Get Started <ArrowRight className="w-4 h-4 ml-1" />
-        </Link>
+        <div className="flex flex-col gap-3 justify-center w-full max-w-sm mx-auto sm:max-w-none sm:w-auto sm:flex-row">
+          <a href="https://app.farmersmarketsocal.com/registration" className="bg-[#0f172a] hover:bg-black text-white px-6 py-3 lg:px-7 rounded-lg text-[14px] lg:text-[15px] font-medium flex items-center justify-center gap-2 transition-colors w-full sm:w-auto sm:inline-flex">
+            Get Started <ArrowRight className="w-4 h-4 ml-1" />
+          </a>
+          <a href="https://app.farmersmarketsocal.com/contact" className="bg-transparent hover:bg-white/10 text-white border border-white/30 px-6 py-3 lg:px-7 rounded-lg text-[14px] lg:text-[15px] font-medium flex items-center justify-center gap-2 transition-colors w-full sm:w-auto sm:inline-flex">
+            Contact Us
+          </a>
+        </div>
       </div>
     </section>
   );

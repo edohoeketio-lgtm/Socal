@@ -16,11 +16,14 @@ export default function Hero() {
             <p className="text-[15px] sm:text-[1.1rem] lg:text-[1.15rem] text-white/90 mb-8 leading-[1.6] max-w-[280px] sm:max-w-md lg:max-w-lg mx-auto lg:mx-0">
               Whether you're buying, selling, or managing, find out how farmersmarketsocal is helping all members of the community
             </p>
-            
-            <Link to="/register" className="bg-[#0f172a] hover:bg-black text-white px-6 py-3 rounded-lg text-[15px] font-medium inline-flex items-center justify-center lg:justify-start gap-2 transition-colors mb-10 w-full sm:w-auto mx-auto lg:mx-0">
-              Get Started <ArrowRight className="w-4 h-4 ml-1" />
-            </Link>
-
+            <div className="flex flex-col gap-3 justify-center lg:justify-start mb-10 mx-auto lg:mx-0 w-full sm:w-auto mt-2">
+              <a href="https://app.farmersmarketsocal.com/registration" className="bg-[#0f172a] hover:bg-black text-white px-6 py-3 rounded-lg text-[15px] font-medium flex items-center justify-center gap-2 transition-colors w-full sm:w-auto">
+                Get Started <ArrowRight className="w-4 h-4 ml-1" />
+              </a>
+              <a href="https://app.farmersmarketsocal.com/contact" className="bg-transparent hover:bg-white/10 text-white border border-white/30 px-6 py-3 rounded-lg text-[15px] font-medium flex items-center justify-center gap-2 transition-colors w-full sm:w-auto">
+                Contact Us
+              </a>
+            </div>
             <ul className="flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-8 text-left">
               {[
                 'Free to join',

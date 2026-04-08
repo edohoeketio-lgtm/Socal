@@ -12,7 +12,8 @@ export const shoppersData = {
   features: [
     {
       title: "Search Farmers Markets",
-      description: "Find recommended markets based on your location and preference"
+      description: "Find recommended markets based on your location and preference",
+      link: "https://app.farmersmarketsocal.com/farmers-markets-near-me"
     },
     {
       title: "See Market Details",
@@ -20,11 +21,13 @@ export const shoppersData = {
     },
     {
       title: "Buy Direct from Vendors",
-      description: "Shop local or regional with 3rd party and private delivery options"
+      description: "Shop local or regional with 3rd party and private delivery options",
+      link: "https://app.farmersmarketsocal.com/search-vendors"
     },
     {
       title: "Easy Product Search",
-      description: "Search products across regions, by vendor, by keyword or based on attributes like organic, no sugar, non-pasteurized and more"
+      description: "Search products across regions, by vendor, by keyword or based on attributes like organic, no sugar, non-pasteurized and more",
+      link: "https://app.farmersmarketsocal.com/search-products"
     },
     {
       title: "Get to Know Your Farmers",

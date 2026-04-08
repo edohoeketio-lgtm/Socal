@@ -3,6 +3,7 @@ import React from 'react';
 export interface FeatureItem {
   title: string;
   description: string;
+  link?: string;
 }
 
 interface FeatureSectionProps {
@@ -56,9 +57,15 @@ export default function FeatureSection({
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-[16px] lg:text-[17px] font-semibold text-textMain mb-1 lg:mb-1.5 leading-snug">
-                      {feature.title}
-                    </h3>
+                    {feature.link ? (
+                      <a href={feature.link} className="text-[16px] lg:text-[17px] font-semibold text-textMain mb-1 lg:mb-1.5 leading-snug underline hover:text-textMain/80 transition-colors inline-block">
+                        {feature.title}
+                      </a>
+                    ) : (
+                      <h3 className="text-[16px] lg:text-[17px] font-semibold text-textMain mb-1 lg:mb-1.5 leading-snug">
+                        {feature.title}
+                      </h3>
+                    )}
                     <p className="text-[14px] lg:text-[15px] text-textMuted leading-[1.6]">
                       {feature.description}
                     </p>
